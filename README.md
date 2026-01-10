@@ -52,11 +52,11 @@ The Automated AI Attendance System is a sophisticated facial recognition applica
 *Real-time webcam feed showing the attendance system in active mode with corner detection*
 
 ### Face Recognition & Student Profile
-![Face Detection](screenshots/face-detection.png)
+![Face Detection](screenshots/student-profile.png)
 *Successful face recognition displaying complete student profile with attendance count*
 
-### Duplicate Prevention System
-![Loading Screen](screenshots/loading-screen.png)
+### Already Marked
+![Loading Screen](screenshots/already-marked.png)
 *Smart duplicate prevention showing "Already Marked" status for same-day attendance*
 
 ### Development Environment
