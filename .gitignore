@@ -1,0 +1,13 @@
+# Virtual environment
+venv/
+__pycache__/
+
+# Encoded files
+EncodeFile.p
+
+# Firebase credentials
+serviceAccountKey.json
+
+# OS files
+.DS_Store
+Thumbs.db
