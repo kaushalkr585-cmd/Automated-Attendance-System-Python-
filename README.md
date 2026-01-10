@@ -28,8 +28,6 @@
 - [Code Documentation](#-code-documentation)
 - [How It Works](#-how-it-works)
 - [Troubleshooting](#-troubleshooting)
-- [Contributing](#-contributing)
-- [License](#-license)
 
 ## 📖 Overview
 
