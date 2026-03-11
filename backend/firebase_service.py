@@ -3,6 +3,7 @@ from firebase_admin import credentials, db, storage
 from datetime import datetime
 import os
 import io
+import json
 
 # ─── Firebase Initialization ────────────────────────────────────────────────
 _initialized = False
@@ -15,17 +16,31 @@ def initialize_firebase():
         firebase_admin.get_app()
         _initialized = True
     except ValueError:
-        # Look for serviceAccountKey.json in parent directory (project root)
-        key_path = os.path.join(os.path.dirname(__file__), "..", "serviceAccountKey.json")
-        key_path = os.path.abspath(key_path)
-        if not os.path.exists(key_path):
-            raise FileNotFoundError(f"serviceAccountKey.json not found at {key_path}")
-        cred = credentials.Certificate(key_path)
+        # Production: read credentials from environment variable (JSON string)
+        firebase_creds_env = os.environ.get("FIREBASE_CREDENTIALS")
+        if firebase_creds_env:
+            cred_dict = json.loads(firebase_creds_env)
+            cred = credentials.Certificate(cred_dict)
+        else:
+            # Local development: read from serviceAccountKey.json
+            key_path = os.path.join(os.path.dirname(__file__), "..", "serviceAccountKey.json")
+            key_path = os.path.abspath(key_path)
+            if not os.path.exists(key_path):
+                raise FileNotFoundError(f"serviceAccountKey.json not found at {key_path}")
+            cred = credentials.Certificate(key_path)
+
         firebase_admin.initialize_app(cred, {
-            "databaseURL": "https://automated-attendance-sys-7132e-default-rtdb.firebaseio.com/",
-            "storageBucket": "automated-attendance-sys-7132e.appspot.com",
+            "databaseURL": os.environ.get(
+                "FIREBASE_DATABASE_URL",
+                "https://automated-attendance-sys-7132e-default-rtdb.firebaseio.com/"
+            ),
+            "storageBucket": os.environ.get(
+                "FIREBASE_STORAGE_BUCKET",
+                "automated-attendance-sys-7132e.appspot.com"
+            ),
         })
         _initialized = True
+
 
 
 # ─── Student CRUD ────────────────────────────────────────────────────────────
