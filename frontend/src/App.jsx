@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import ParticleBackground from './components/ParticleBackground';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Dashboard from './pages/Dashboard';
 import ScannerPage from './pages/Scanner';
 import Students from './pages/Students';
@@ -28,6 +29,7 @@ export default function App() {
               <Route path="/admin"     element={<Admin />} />
             </Routes>
           </AnimatePresence>
+          <Footer />
         </div>
       </div>
     </BrowserRouter>
