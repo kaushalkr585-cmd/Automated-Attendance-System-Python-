@@ -1,0 +1,350 @@
+@import "tailwindcss";
+
+/* ─── Design Tokens ─────────────────────────────────────────────────────── */
+:root {
+  --primary: #6366F1;
+  --primary-glow: rgba(99, 102, 241, 0.4);
+  --accent: #22C55E;
+  --accent-glow: rgba(34, 197, 94, 0.4);
+  --cyan: #06B6D4;
+  --purple: #A855F7;
+  --bg: #0F172A;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --text-primary: #F1F5F9;
+  --text-muted: #64748B;
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 99px;
+}
+
+/* ─── Glass Card ─────────────────────────────────────────────────────────── */
+.glass {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+}
+
+/* ─── Gradient Border ────────────────────────────────────────────────────── */
+.gradient-border {
+  position: relative;
+  border-radius: 16px;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--primary), var(--purple), var(--cyan));
+  border-radius: inherit;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ─── Neon Glow ──────────────────────────────────────────────────────────── */
+.neon-primary {
+  box-shadow: 0 0 20px var(--primary-glow), 0 0 40px var(--primary-glow);
+}
+
+.neon-accent {
+  box-shadow: 0 0 20px var(--accent-glow), 0 0 40px var(--accent-glow);
+}
+
+.neon-text-primary {
+  text-shadow: 0 0 20px var(--primary-glow);
+}
+
+.neon-text-accent {
+  text-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* ─── Scan Beam Animation ────────────────────────────────────────────────── */
+@keyframes scan-beam {
+  0% {
+    top: 0%;
+    opacity: 1;
+  }
+
+  100% {
+    top: 100%;
+    opacity: 0.3;
+  }
+}
+
+@keyframes scan-beam-reverse {
+  0% {
+    top: 100%;
+    opacity: 0.3;
+  }
+
+  100% {
+    top: 0%;
+    opacity: 1;
+  }
+}
+
+.scan-beam {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  box-shadow: 0 0 20px var(--accent-glow), 0 0 40px var(--accent-glow);
+  animation: scan-beam 2s linear infinite alternate;
+  pointer-events: none;
+}
+
+/* ─── Pulse Animation ────────────────────────────────────────────────────── */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  50% {
+    box-shadow: 0 0 50px var(--accent-glow), 0 0 80px var(--accent-glow);
+  }
+}
+
+.pulse-accent {
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+/* ─── Corner Scan Box ────────────────────────────────────────────────────── */
+.scan-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: var(--accent);
+  border-style: solid;
+}
+
+.scan-corner-tl {
+  top: 0;
+  left: 0;
+  border-width: 3px 0 0 3px;
+}
+
+.scan-corner-tr {
+  top: 0;
+  right: 0;
+  border-width: 3px 3px 0 0;
+}
+
+.scan-corner-bl {
+  bottom: 0;
+  left: 0;
+  border-width: 0 0 3px 3px;
+}
+
+.scan-corner-br {
+  bottom: 0;
+  right: 0;
+  border-width: 0 3px 3px 0;
+}
+
+/* ─── Grid Overlay ───────────────────────────────────────────────────────── */
+.scan-grid {
+  background-image:
+    linear-gradient(rgba(34, 197, 94, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 197, 94, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ─── Gradient Text ──────────────────────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Float Animation ────────────────────────────────────────────────────── */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* ─── Blink ──────────────────────────────────────────────────────────────── */
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* ─── Success Ring ───────────────────────────────────────────────────────── */
+@keyframes success-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.success-ring {
+  animation: success-ring 0.8s ease-out forwards;
+}
+
+/* ─── Rotate ─────────────────────────────────────────────────────────────── */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* ─── Responsive Utilities ───────────────────────────────────────────────── */
+.responsive-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.responsive-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.responsive-two-col {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Table scroll wrapper */
+.table-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Nav drawer overlay */
+.nav-drawer-overlay {
+  display: none;
+}
+
+/* ─── Tablet (< 1024px) ──────────────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .responsive-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .responsive-two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .responsive-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Mobile (< 768px) ───────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .responsive-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .responsive-two-col {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .responsive-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .nav-drawer-overlay.open {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 98;
+    backdrop-filter: blur(4px);
+  }
+
+  /* Comfortable touch targets */
+  button {
+    min-height: 44px;
+  }
+}
+
+/* ─── Small mobile (< 480px) ─────────────────────────────────────────────── */
+@media (max-width: 479px) {
+  .responsive-grid-4 {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+}

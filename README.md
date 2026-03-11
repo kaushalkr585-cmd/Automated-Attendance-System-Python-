@@ -1,15 +1,18 @@
-# 🤖 Automated AI Attendance System
+# 🤖 FaceAI – Automated AI Attendance System
 
 <div align="center">
 
-![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
-![OpenCV](https://img.shields.io/badge/OpenCV-4.x-green.svg)
-![Firebase](https://img.shields.io/badge/Firebase-Realtime%20DB-orange.svg)
-![Face Recognition](https://img.shields.io/badge/Face%20Recognition-AI%20Powered-red.svg)
+![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.109-009688.svg)
+![React](https://img.shields.io/badge/React-19-61DAFB.svg?logo=react)
+![Vite](https://img.shields.io/badge/Vite-7-646CFF.svg?logo=vite)
+![Firebase](https://img.shields.io/badge/Firebase-Realtime%20DB%20%2B%20Storage-orange.svg)
+![OpenCV](https://img.shields.io/badge/OpenCV-4.9-green.svg)
+![face_recognition](https://img.shields.io/badge/face__recognition-AI%20Powered-red.svg)
 
-**An intelligent attendance system powered by facial recognition technology**
+**A full-stack, AI-powered attendance system with a React dashboard and a FastAPI backend**
 
-[Features](#-features) • [Installation](#-installation) • [Usage](#️-usage) • [Documentation](#-how-it-works)
+[Features](#-features) • [Architecture](#-system-architecture) • [Installation](#-installation) • [Usage](#️-usage) • [API Reference](#-api-reference)
 
 </div>
 
@@ -21,337 +24,343 @@
 - [Screenshots](#-screenshots)
 - [Features](#-features)
 - [Technologies Used](#️-technologies-used)
+- [System Architecture](#-system-architecture)
 - [Project Structure](#-project-structure)
 - [Installation](#-installation)
 - [Firebase Setup](#-firebase-setup)
 - [Usage](#️-usage)
-- [Code Documentation](#-code-documentation)
-- [How It Works](#-how-it-works)
+- [API Reference](#-api-reference)
 - [Troubleshooting](#-troubleshooting)
+
+---
 
 ## 📖 Overview
 
-The Automated AI Attendance System is a sophisticated facial recognition application that revolutionizes traditional attendance tracking. Built with Python, OpenCV, and Firebase, it leverages advanced computer vision algorithms to detect, recognize, and record student attendance in real-time with minimal human intervention.
+**FaceAI** is a sophisticated, full-stack automated attendance system that uses real-time facial recognition to detect and record student attendance — no manual input required.
+
+The system is split into two main layers:
+
+| Layer | Tech | URL |
+|-------|------|-----|
+| **Backend API** | Python · FastAPI · face_recognition · Firebase | `http://localhost:8000` |
+| **Frontend Dashboard** | React 19 · Vite · Tailwind CSS · Framer Motion | `http://localhost:5173` |
 
 **Key Highlights:**
-- ⚡ Real-time face detection and recognition
-- 🔄 Automatic attendance marking with duplicate prevention
-- ☁️ Cloud-based data storage using Firebase
-- 📊 Comprehensive student information display
-- 🎨 Professional UI with visual feedback
-- 🔒 Secure and reliable attendance tracking
+- ⚡ Real-time webcam face scanning via the browser
+- 🧠 128-dimensional face embeddings with multi-scale HOG detection
+- 📊 Live analytics dashboard with charts
+- 👤 Full student CRUD with image upload
+- ☁️ Firebase Realtime Database + Storage for cloud persistence
+- 🔒 Duplicate attendance prevention (30-second cooldown)
+- 🎨 Animated, responsive UI with particle background
+
+---
 
 ## 📸 Screenshots
 
 <div align="center">
 
-### System Interface - Active State
-![Active System](screenshots/active-system.png)
-*Real-time webcam feed showing the attendance system in active mode with corner detection*
+### 🏠 Dashboard – Live Stats & Attendance Trend
+![Dashboard](screenshots/dashboard.png)
+*Real-time stats cards, 7-day attendance trend chart, and recent activity feed*
 
-### Face Recognition & Student Profile
-![Face Detection](screenshots/student-profile.png)
-*Successful face recognition displaying complete student profile with attendance count*
+### 📷 Scanner – Live Webcam Face Recognition
+![Scanner](screenshots/scanner.png)
+*Webcam feed with Auto-Scan mode, status indicator, and scan controls*
 
-### Already Marked
-![Loading Screen](screenshots/already-marked.png)
-*Smart duplicate prevention showing "Already Marked" status for same-day attendance*
+### 👥 Students – Student Database
+![Students](screenshots/students.png)
+*Searchable student table with photo, name, branch, year, and attendance columns*
 
-### Development Environment
-![VS Code Setup](screenshots/development-environment.png)
-*Complete project structure and implementation in VS Code IDE*
+### 📊 Analytics – Attendance Insights
+![Analytics](screenshots/analytics.png)
+*Attendance per student, branch-wise distribution, and 7-day daily trend charts*
+
+### 🔧 Admin Controls – Manage Students & Encodings
+![Admin](screenshots/admin.png)
+*Generate encodings, add/edit/delete students with session counts*
 
 </div>
 
+---
+
 ## 🚀 Features
 
-### Core Functionality
-- **🎯 Real-time Face Detection**: Instant detection using face_recognition library with HOG algorithm
-- **🧠 Face Encoding & Recognition**: 128-dimensional face embeddings for accurate identification
-- **📸 Multi-Camera Support**: Automatic detection of available cameras (USB/built-in)
-- **☁️ Firebase Integration**: Real-time database and cloud storage for data persistence
-- **🔄 Auto-Sync**: Automatic synchronization of attendance records
-- **⚡ Optimized Performance**: Efficient processing with resized frames and batch operations
+### Frontend (React Dashboard)
+- **📍 Live Scanner** – Webcam capture via `react-webcam`, sends frames to the backend for recognition
+- **📊 Analytics** – Charts (Chart.js) showing attendance trends over time
+- **👥 Student Management** – Add, edit, delete students with photo upload
+- **🔧 Admin Panel** – Generate/refresh face encodings without restarting the server
+- **🏠 Dashboard** – System stats: total students, today's attendance, all-time count
+- **✨ Animated UI** – Framer Motion transitions, 3D particle background (Three.js), responsive Navbar
+- **📱 Fully Responsive** – Mobile-first layout that adapts from 320px to 4K
 
-### Advanced Features
-- **👤 Student Profile Display**: Real-time display of student information (name, ID, major, year, standing)
-- **📊 Attendance Analytics**: Tracks total attendance count and last attendance timestamp
-- **🚫 Duplicate Prevention**: Prevents multiple check-ins within 30 seconds
-- **🎨 Dynamic UI Modes**: 4 different UI states (Active, Loading, Marked, Already Marked)
-- **📁 Flexible Image Loading**: Supports both local and Firebase Storage image retrieval
-- **🔐 Secure Data Handling**: Firebase Admin SDK for secure database operations
-- **🖼️ Image Fallback**: Automatic fallback to .jpg if .png not found
-- **📏 Resolution Control**: Configurable camera resolution (640x480 default)
+### Backend (FastAPI)
+- **`POST /recognize`** – Accept a JPEG image, run face recognition, return matched student + confidence
+- **`GET/POST/PUT/DELETE /students`** – Full CRUD with optional image upload
+- **`POST /encodings/generate`** – Regenerate all face encodings from local + Firebase Storage images
+- **`GET /stats`** – Aggregate stats: total students, today's count, all-time attendance
+- **`GET /health`** – Health check endpoint
+- **Interactive Swagger UI** at `/docs`
 
-### Technical Features
-- **Smart Camera Detection**: Automatically scans for working cameras (index 0-4)
-- **Face Distance Calculation**: Uses Euclidean distance for accurate matching
-- **Corner Rectangle Overlay**: Visual feedback with corner rectangles on detected faces
-- **Timestamp Management**: Tracks attendance with precise datetime stamps
-- **Error Handling**: Comprehensive error handling for image loading and database operations
-- **Performance Optimization**: 4x scaling for faster face detection processing
+### AI / Recognition Engine
+- Multi-scale HOG face detection (50% scale + full-res fallback)
+- YCrCb luminance equalisation for poor lighting
+- 128-dim face embeddings with `num_jitters=2` for robustness
+- Tolerance-based comparison (configurable, default `0.55`)
+- Hot-reloadable in-memory encodings (no server restart needed)
+
+---
 
 ## 🛠️ Technologies Used
 
+### Backend
 | Technology | Purpose | Version |
 |------------|---------|---------|
-| **Python** | Core programming language | 3.8+ |
-| **OpenCV (cv2)** | Computer vision and image processing | 4.x |
-| **face_recognition** | Facial recognition and encoding | Latest |
-| **NumPy** | Numerical computations and array operations | Latest |
-| **CVZone** | Computer vision utilities (cornerRect, putTextRect) | Latest |
-| **Firebase Admin SDK** | Database and storage integration | Latest |
-| **pickle** | Serialization of face encodings | Built-in |
-| **datetime** | Timestamp management | Built-in |
+| **Python** | Core language | 3.10+ |
+| **FastAPI** | REST API framework | 0.109.2 |
+| **Uvicorn** | ASGI server | 0.27.1 |
+| **face_recognition** | Face embeddings & matching | 1.3.0 |
+| **OpenCV (cv2)** | Image preprocessing | 4.9.0 |
+| **NumPy** | Numerical ops | 1.26.4 |
+| **Firebase Admin SDK** | DB & Storage | 6.4.0 |
+| **Pillow** | Image handling | 10.2.0 |
+| **python-multipart** | File uploads | 0.0.9 |
+| **pickle** | Encoding serialisation | built-in |
 
-### External Dependencies
+### Frontend
+| Technology | Purpose |
+|------------|---------|
+| **React 19** | UI framework |
+| **Vite 7** | Build tool & dev server |
+| **Tailwind CSS 4** | Utility-first styling |
+| **Framer Motion** | Animations & transitions |
+| **React Router DOM 7** | Client-side routing |
+| **Axios** | HTTP client (`/api/*`) |
+| **Chart.js + react-chartjs-2** | Analytics charts |
+| **react-webcam** | Webcam capture |
+| **Three.js + @react-three/fiber** | 3D particle background |
+| **lucide-react** | Icon library |
+
+---
+
+## 🏗️ System Architecture
+
 ```
-opencv-python>=4.5.0
-face-recognition>=1.3.0
-numpy>=1.19.0
-cvzone>=1.5.0
-firebase-admin>=5.0.0
+┌──────────────────────────────────────────────────────────────┐
+│                  FaceAI – System Architecture                 │
+├──────────────────────────────────────────────────────────────┤
+│                                                              │
+│  ┌──────────────────┐         ┌──────────────────────────┐  │
+│  │  React Frontend  │ ◄─────► │  FastAPI Backend          │  │
+│  │  (Vite · port    │  REST   │  (Uvicorn · port 8000)   │  │
+│  │   5173)          │  JSON   │                          │  │
+│  └──────────────────┘         └──────────┬───────────────┘  │
+│                                          │                   │
+│         ┌────────────────────────────────┤                   │
+│         │                                │                   │
+│  ┌──────▼──────┐              ┌──────────▼──────────┐        │
+│  │ face_service│              │  firebase_service   │        │
+│  │  (HOG +     │              │  Realtime DB +      │        │
+│  │   dlib)     │              │  Cloud Storage      │        │
+│  └──────┬──────┘              └─────────────────────┘        │
+│         │  EncodeFile.p                                       │
+│         │  (pickle)                                           │
+│  ┌──────▼──────┐                                             │
+│  │  Images/    │ ◄── local student photos                    │
+│  └─────────────┘                                             │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
 ```
+
+### Request Flow – Attendance Scan
+
+```
+Browser Webcam
+     │  JPEG frame
+     ▼
+POST /recognize (FastAPI)
+     │
+     ├─► _bytes_to_rgb_array()
+     ├─► _preprocess()  (YCrCb equalise + Gaussian blur)
+     ├─► face_locations() @ 50% scale  ──► fallback full-res
+     ├─► face_encodings()  (128-dim vector, 2 jitters)
+     ├─► face_distance()   (Euclidean vs. known encodings)
+     ├─► compare_faces()   (tolerance = 0.55)
+     │
+     ├─► IF matched → fetch student from Firebase
+     │              → check last_attendance_time
+     │              → IF > 30 s → increment & update DB
+     │              → return { matched, student_id, confidence, … }
+     │
+     └─► ELSE → return { matched: false, … }
+```
+
+---
 
 ## 📁 Project Structure
 
 ```
-Automated-AI-Attendance-System/
+Automated AI Attendance System/
 │
-├── 📂 Images/                          # Student face images (ID-based naming)
-│   ├── 321654.png                      # Kaushal Kumar's image
-│   ├── 852741.png                      # Nibedita Misra's image
-│   ├── 963852.png                      # Rishabh Raj's image
-│   └── ...
+├── 📂 backend/                    # FastAPI application
+│   ├── main.py                    # App entry-point, middleware, startup
+│   ├── face_service.py            # AI recognition engine (HOG, encodings)
+│   ├── firebase_service.py        # Firebase DB & Storage helpers
+│   ├── requirements.txt           # Python dependencies
+│   └── routes/
+│       ├── __init__.py
+│       ├── recognize.py           # POST /recognize
+│       ├── attendance.py          # Attendance endpoints
+│       ├── students.py            # CRUD /students
+│       └── encodings.py          # POST /encodings/generate
 │
-├── 📂 Resources/                       # UI assets and graphics
-│   ├── background.png                  # Main application background (1280x720)
-│   └── Modes/                          # UI mode states
-│       ├── 1.png                       # Mode 0: Active/Idle state
-│       ├── 2.png                       # Mode 1: Loading state
-│       ├── 3.png                       # Mode 2: Marked successfully
-│       └── 4.png                       # Mode 3: Already marked
+├── 📂 frontend/                   # React + Vite application
+│   ├── index.html
+│   ├── vite.config.js
+│   ├── package.json
+│   └── src/
+│       ├── main.jsx               # App entry, ReactDOM
+│       ├── App.jsx                # Router & top-level layout
+│       ├── index.css              # Global styles & design tokens
+│       ├── api/                   # Axios API helper modules
+│       ├── components/
+│       │   ├── Navbar.jsx         # Responsive navigation bar
+│       │   ├── ParticleBackground.jsx  # Three.js particle canvas
+│       │   └── StudentCard.jsx    # Reusable student info card
+│       └── pages/
+│           ├── Dashboard.jsx      # Home – stats overview
+│           ├── Scanner.jsx        # Live webcam scanner
+│           ├── Students.jsx       # Student list & management
+│           ├── Analytics.jsx      # Charts & attendance trends
+│           └── Admin.jsx          # Encoding management
 │
-├── 📂 screenshots/                     # Documentation screenshots
-│   ├── active-system.png
-│   ├── face-detection.png
-│   ├── loading-screen.png
-│   └── development-environment.png
+├── 📂 Images/                     # Local student photos (ID-named)
+├── 📂 Resources/                  # Legacy UI assets (background, mode PNGs)
+├── 📂 screenshots/                # README screenshots
 │
-├── 📄 main.py                          # Main application (259 lines)
-├── 📄 AddDataToDatabase.py             # Add student data to Firebase (68 lines)
-├── 📄 EncodeGenerator.py               # Generate face encodings (124 lines)
-├── 📄 EncodeFile.p                     # Pickled face encodings (binary)
-├── 📄 serviceAccountKey.json           # Firebase credentials (⚠️ KEEP SECRET!)
-├── 📄 requirements.txt                 # Python dependencies
-├── 📄 .gitignore                       # Git ignore rules
-└── 📄 README.md                        # This file
+├── 📄 main.py                     # Legacy standalone script (deprecated)
+├── 📄 AddDataToDatabase.py        # One-time Firebase seed script
+├── 📄 EncodeGenerator.py          # One-time encoding generator script
+├── 📄 EncodeFile.p                # Pickled face encodings (binary)
+├── 📄 serviceAccountKey.json      # Firebase credentials ⚠️ KEEP SECRET
+├── 📄 start_backend.bat           # Windows: start FastAPI
+├── 📄 start_frontend.bat          # Windows: start React dev server
+├── 📄 .gitignore
+└── 📄 README.md
 ```
 
-### File Descriptions
-
-| File | Purpose | Lines of Code |
-|------|---------|---------------|
-| `main.py` | Main attendance system with camera feed | 259 |
-| `AddDataToDatabase.py` | Initialize Firebase with student data | 68 |
-| `EncodeGenerator.py` | Generate and save face encodings | 124 |
-| `EncodeFile.p` | Serialized face encodings (pickle) | Binary |
-| `serviceAccountKey.json` | Firebase authentication credentials | JSON |
+---
 
 ## 📦 Installation
 
 ### Prerequisites
 
-Before starting, ensure you have:
+- ✅ **Python 3.10+** – [Download](https://www.python.org/downloads/)
+- ✅ **Node.js 18+** – [Download](https://nodejs.org/)
+- ✅ **Webcam** (built-in or USB)
+- ✅ **Firebase Account** – [Create Free](https://console.firebase.google.com/)
+- ✅ **Git** (optional)
 
-- ✅ **Python 3.8 or higher** ([Download](https://www.python.org/downloads/))
-- ✅ **pip** (comes with Python)
-- ✅ **Webcam** (built-in or external USB camera)
-- ✅ **Firebase Account** ([Create Free Account](https://console.firebase.google.com/))
-- ✅ **Git** (optional, for cloning)
-
-### System-Specific Requirements
+### System-Specific Requirements for `dlib`
 
 #### Windows
 ```bash
 # Install Visual C++ Build Tools
-# Download from: https://visualstudio.microsoft.com/visual-cpp-build-tools/
-
-# Install CMake
+# https://visualstudio.microsoft.com/visual-cpp-build-tools/
 pip install cmake
 ```
 
 #### macOS
 ```bash
-# Install Homebrew (if not installed)
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# Install CMake
 brew install cmake
 ```
 
 #### Linux (Ubuntu/Debian)
 ```bash
-sudo apt-get update
-sudo apt-get install -y python3-dev python3-pip
-sudo apt-get install -y cmake libopenblas-dev liblapack-dev
-sudo apt-get install -y libx11-dev libgtk-3-dev
+sudo apt-get install -y python3-dev cmake libopenblas-dev liblapack-dev \
+  libx11-dev libgtk-3-dev libboost-all-dev
 ```
 
-### Step-by-Step Installation
+---
 
-#### 1️⃣ Clone or Download the Repository
+### Step 1 – Clone the Repository
 
-**Option A: Using Git**
 ```bash
 git clone https://github.com/kaushalkr585-cmd/Automated-AI-Attendance-System.git
-cd Automated-AI-Attendance-System
+cd "Automated AI Attendance System"
 ```
 
-**Option B: Download ZIP**
-- Download from GitHub
-- Extract the ZIP file
-- Navigate to the extracted folder
-
-#### 2️⃣ Create Virtual Environment (Recommended)
+### Step 2 – Backend Setup
 
 ```bash
-# Windows
+cd backend
+
+# (Recommended) Create a virtual environment
 python -m venv venv
+# Windows:
 venv\Scripts\activate
-
-# macOS/Linux
-python3 -m venv venv
+# macOS/Linux:
 source venv/bin/activate
-```
 
-#### 3️⃣ Install Dependencies
-
-**Install all packages:**
-```bash
-pip install opencv-python
-pip install face-recognition
-pip install numpy
-pip install cvzone
-pip install firebase-admin
-```
-
-**Or use requirements.txt:**
-```bash
+# Install Python dependencies
 pip install -r requirements.txt
 ```
 
-#### 4️⃣ Install dlib (Critical for face_recognition)
+> **If `dlib` fails on Windows**, try the pre-compiled wheel:
+> ```bash
+> pip install dlib-binary
+> pip install face-recognition
+> ```
 
-**Windows:**
-```bash
-pip install cmake
-pip install dlib
-# If above fails, use pre-compiled wheel:
-pip install dlib-binary
-```
-
-**macOS:**
-```bash
-brew install cmake
-pip install dlib
-```
-
-**Linux:**
-```bash
-sudo apt-get install cmake libboost-all-dev
-pip install dlib
-```
-
-#### 5️⃣ Verify Installation
-
-```python
-# Create test_install.py
-import cv2
-import face_recognition
-import firebase_admin
-print("✅ All packages installed successfully!")
-```
+### Step 3 – Frontend Setup
 
 ```bash
-python test_install.py
+cd frontend
+npm install
 ```
+
+---
 
 ## 🔥 Firebase Setup
 
-### Step 1: Create Firebase Project
+### Step 1 – Create Firebase Project
 
-1. Go to [Firebase Console](https://console.firebase.google.com/)
-2. Click **"Create a project"**
-3. Enter project name: `automated-attendance-system`
-4. Disable Google Analytics (optional)
-5. Click **"Create project"**
+1. Open [Firebase Console](https://console.firebase.google.com/)
+2. Click **Create a project** → name it (e.g. `faceai-attendance`)
+3. Disable Google Analytics (optional) → **Create project**
 
-### Step 2: Enable Realtime Database
+### Step 2 – Enable Realtime Database
 
-1. In Firebase Console → **Build** → **Realtime Database**
-2. Click **"Create Database"**
-3. Select location (closest to you)
-4. Start in **"Test mode"** for development
-5. Click **"Enable"**
+1. **Build** → **Realtime Database** → **Create Database**
+2. Choose your region, start in **Test mode**
+3. Note your DB URL: `https://<project-id>-default-rtdb.firebaseio.com/`
 
-**Database URL will be:**
-```
-https://automated-attendance-sys-7132e-default-rtdb.firebaseio.com/
-```
+### Step 3 – Enable Firebase Storage
 
-### Step 3: Enable Firebase Storage
+1. **Build** → **Storage** → **Get started**
+2. Start in **Test mode** → **Done**
 
-1. Navigate to **Build** → **Storage**
-2. Click **"Get started"**
-3. Start in **"Test mode"**
-4. Select same location as database
-5. Click **"Done"**
+### Step 4 – Generate Service Account Key
 
-**Storage bucket will be:**
-```
-automated-attendance-sys-7132e.appspot.com
-```
+1. **Project Settings** (⚙️) → **Service accounts**
+2. **Generate new private key** → **Generate key**
+3. Save the downloaded JSON as **`serviceAccountKey.json`** in the project root
 
-### Step 4: Generate Service Account Key
+> ⚠️ **NEVER commit `serviceAccountKey.json` to Git!** It is already in `.gitignore`.
 
-1. Click **Project Settings** (⚙️ gear icon)
-2. Go to **"Service accounts"** tab
-3. Click **"Generate new private key"**
-4. Click **"Generate key"**
-5. Save downloaded JSON file as `serviceAccountKey.json`
-6. **Move file to project root directory**
+### Step 5 – Configure Firebase URLs in Backend
 
-⚠️ **CRITICAL**: Never commit this file to GitHub!
+Open `backend/firebase_service.py` and update:
 
-### Step 5: Update .gitignore
-
-```gitignore
-# Firebase credentials
-serviceAccountKey.json
-*.json
-
-# Face encodings
-EncodeFile.p
-*.p
-
-# Python cache
-__pycache__/
-*.pyc
-*.pyo
-
-# Virtual environment
-venv/
-env/
-
-# IDE
-.vscode/
-.idea/
+```python
+firebase_admin.initialize_app(cred, {
+    "databaseURL": "https://<YOUR-PROJECT-ID>-default-rtdb.firebaseio.com/",
+    "storageBucket": "<YOUR-PROJECT-ID>.appspot.com"
+})
 ```
 
-### Step 6: Configure Database Structure
-
-Your Firebase Realtime Database will have this structure:
+### Firebase Database Structure
 
 ```json
 {
@@ -359,559 +368,182 @@ Your Firebase Realtime Database will have this structure:
     "321654": {
       "name": "Kaushal Kumar",
       "major": "Computer Science",
-      "starting_year": 2022,
-      "total_attendance": 0,
-      "standing": "Excellent",
-      "year": 4,
       "branch": "CSE",
-      "last_attendance_time": "2025-01-10 14:30:00"
-    },
-    "852741": {
-      "name": "Nibedita Misra",
-      "major": "Psychology",
-      "starting_year": 2021,
-      "total_attendance": 0,
-      "standing": "Good",
+      "starting_year": 2022,
       "year": 4,
-      "branch": "Humanities",
-      "last_attendance_time": "2025-01-10 14:30:00"
+      "standing": "Excellent",
+      "total_attendance": 12,
+      "last_attendance_time": "2025-03-11 14:30:00",
+      "profile_image_url": "https://storage.googleapis.com/..."
     }
   }
 }
 ```
 
+---
+
 ## ▶️ Usage
 
-### Complete Workflow
+### Quick Start (Windows)
+
+Open two terminals and run:
+
+```bat
+# Terminal 1 – Backend
+start_backend.bat
+
+# Terminal 2 – Frontend
+start_frontend.bat
+```
+
+### Manual Start
+
+**Backend:**
+```bash
+cd backend
+uvicorn main:app --reload --port 8000
+```
+
+**Frontend:**
+```bash
+cd frontend
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+---
+
+### Workflow
 
 ```
-1. Add Student Data → 2. Add Images → 3. Generate Encodings → 4. Run System
+1. Add Students  →  2. Upload Photos  →  3. Generate Encodings  →  4. Start Scanning
 ```
 
-### Step 1: Add Student Data to Firebase
+#### 1. Add Students
+- Navigate to the **Students** page in the dashboard
+- Click **Add Student** and fill in the form (name, ID, major, branch, year, photo)
+- The API auto-generates the face encoding on upload
 
-Edit `AddDataToDatabase.py` to add your students:
+#### 2. Generate / Refresh Encodings
+- Go to the **Admin** page
+- Click **Generate Encodings** — this rebuilds `EncodeFile.p` from all local images and Firebase Storage images without restarting the server
 
-```python
-data = {
-    "321654": {
-        "name": "Kaushal Kumar",
-        "major": "Computer Science",
-        "starting_year": 2022,
-        "total_attendance": 0,
-        "standing": "Excellent",
-        "year": 4,
-        "branch": "CSE",
-        "last_attendance_time": current_time
-    }
+#### 3. Scan Attendance
+- Go to the **Scanner** page
+- Allow webcam access in the browser
+- The page continuously captures frames and sends them to `POST /recognize`
+- Matched students are displayed with name, confidence score, and attendance is automatically recorded in Firebase
+
+#### 4. View Analytics
+- Open the **Analytics** page for attendance trends and charts
+- The **Dashboard** shows live stats (total students, today's attendance, all-time count)
+
+---
+
+## 📡 API Reference
+
+The interactive API docs are available at **`http://localhost:8000/docs`** (Swagger UI).
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/` | Root health check |
+| `GET` | `/health` | Liveness probe |
+| `GET` | `/stats` | Total students, today's & all-time attendance |
+| `POST` | `/recognize` | Recognize face in uploaded image |
+| `GET` | `/students` | List all students |
+| `POST` | `/students` | Add a new student (with optional photo) |
+| `GET` | `/students/{id}` | Get a single student |
+| `PUT` | `/students/{id}` | Update student details / photo |
+| `DELETE` | `/students/{id}` | Delete student & remove encoding |
+| `POST` | `/encodings/generate` | Regenerate all face encodings |
+
+### Example – Recognize a Face
+
+```bash
+curl -X POST http://localhost:8000/recognize \
+  -F "file=@photo.jpg"
+```
+
+**Response:**
+```json
+{
+  "matched": true,
+  "student_id": "321654",
+  "confidence": 87.34,
+  "face_locations": [[120, 300, 280, 140]],
+  "student": {
+    "name": "Kaushal Kumar",
+    "major": "Computer Science",
+    "total_attendance": 13
+  }
 }
 ```
 
-**Run the script:**
-```bash
-python AddDataToDatabase.py
-```
-
-**Expected Output:**
-```
-Firebase initialized successfully
-Adding student data to database...
-Added student: Kaushal Kumar (ID: 321654)
-Added student: Nibedita Misra (ID: 852741)
-Added student: Rishabh Raj (ID: 963852)
-
-All student data added successfully!
-```
-
-### Step 2: Add Student Images
-
-1. **Take clear photos** of students (front-facing)
-2. **Name files** with student ID: `321654.png`, `852741.png`, etc.
-3. **Place in `Images/` folder**
-
-**Image Guidelines:**
-- ✅ Format: PNG or JPG
-- ✅ Resolution: 500x500px minimum
-- ✅ Face clearly visible
-- ✅ Good lighting
-- ✅ Neutral background
-- ❌ No glasses/hats (if possible)
-- ❌ No multiple faces in image
-
-**Example:**
-```
-Images/
-├── 321654.png  # Kaushal Kumar
-├── 852741.png  # Nibedita Misra
-└── 963852.png  # Rishabh Raj
-```
-
-### Step 3: Generate Face Encodings
-
-This creates the `EncodeFile.p` file with face embeddings:
-
-```bash
-python EncodeGenerator.py
-```
-
-**Expected Output:**
-```
-==================================================
-Face Encoding Generator
-==================================================
-
-Found 3 images: ['321654.png', '852741.png', '963852.png']
-Loaded: 321654.png -> ID: 321654
-Loaded: 852741.png -> ID: 852741
-Loaded: 963852.png -> ID: 963852
-
-Successfully loaded 3 images
-Student IDs: ['321654', '852741', '963852']
-
-==================================================
-Encoding Started...
-==================================================
-
-==================================================
-✓ Encoding Complete
-  Successfully encoded: 3 faces
-==================================================
-
-✓ Encoding file saved successfully as 'EncodeFile.p'
-  Total students encoded: 3
-  Student IDs: ['321654', '852741', '963852']
-
-==================================================
-✓ ENCODING GENERATION COMPLETED SUCCESSFULLY!
-  You can now run main.py to start attendance system
-==================================================
-```
-
-### Step 4: Run Attendance System
-
-Start the main application:
-
-```bash
-python main.py
-```
-
-**Expected Console Output:**
-```
-✓ Using camera index 0
-Loading Encode File ...
-Encode File Loaded
-```
-
-**System will display:**
-- Live webcam feed (640x480)
-- Face detection with corner rectangles
-- Student information panel (right side)
-- UI mode indicators
-
-**Keyboard Controls:**
-- Press `ESC` to quit
-- Press `Q` to quit
-- System runs continuously
-
-### Step 5: Using the System
-
-1. **Position yourself** in front of the camera
-2. **Wait for detection** (green corner rectangles appear)
-3. **System processes** and shows "Loading" message
-4. **Student info displays** on the right panel:
-   - Profile picture
-   - Name
-   - Student ID
-   - Major/Branch
-   - Total attendance count
-   - Year and standing
-   - Starting year
-5. **Attendance is marked** automatically
-6. **Cannot re-mark** for 30 seconds (duplicate prevention)
-
-## 📚 Code Documentation
-
-### main.py - Core Application
-
-#### Key Components
-
-**1. Firebase Initialization (Lines 9-20)**
-```python
-cred = credentials.Certificate("serviceAccountKey.json")
-firebase_admin.initialize_app(cred, {
-    "databaseURL": "https://automated-attendance-sys-7132e-default-rtdb.firebaseio.com/",
-    "storageBucket": "automated-attendance-sys-7132e.appspot.com"
-})
-```
-
-**2. Smart Camera Detection (Lines 23-32)**
-```python
-def get_working_camera(max_index=5):
-    for i in range(max_index):
-        cap = cv2.VideoCapture(i)
-        if cap.isOpened():
-            ret, _ = cap.read()
-            if ret:
-                return cap
-    return None
-```
-*Automatically detects available cameras from index 0 to 4*
-
-**3. Face Detection & Recognition (Lines 85-97)**
-```python
-imgS = cv2.resize(img, (0, 0), None, 0.25, 0.25)  # Resize to 25% for speed
-facesCurFrame = face_recognition.face_locations(imgS)
-encodesCurFrame = face_recognition.face_encodings(imgS, facesCurFrame)
-
-matches = face_recognition.compare_faces(encodeListKnown, encodeFace)
-faceDis = face_recognition.face_distance(encodeListKnown, encodeFace)
-matchIndex = np.argmin(faceDis)  # Find best match
-```
-
-**4. Duplicate Prevention (Lines 166-177)**
-```python
-last_time = studentInfo.get("last_attendance_time")
-if last_time:
-    last_time = datetime.strptime(last_time, "%Y-%m-%d %H:%M:%S")
-    secondsElapsed = (datetime.now() - last_time).total_seconds()
-else:
-    secondsElapsed = 999
-
-if secondsElapsed > 30:  # 30 seconds cooldown
-    # Mark attendance
-    ref.child("total_attendance").set(studentInfo["total_attendance"] + 1)
-    ref.child("last_attendance_time").set(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-```
-
-**5. Image Loading with Fallback (Lines 128-158)**
-```python
-# Try local first
-local_path = f"Images/{id}.png"
-if os.path.exists(local_path):
-    imgStudent = cv2.imread(local_path)
-else:
-    # Try Firebase Storage
-    blob = bucket.get_blob(f"Images/{id}.png")
-    if blob is None:
-        blob = bucket.get_blob(f"Images/{id}.jpg")  # Fallback to .jpg
-    if blob is not None:
-        array = np.frombuffer(blob.download_as_string(), np.uint8)
-        imgStudent = cv2.imdecode(array, cv2.IMREAD_COLOR)
-```
-
-### AddDataToDatabase.py - Student Data Management
-
-**Initialize Firebase (Lines 6-17)**
-```python
-def initialize_firebase():
-    try:
-        firebase_admin.get_app()
-        print("Firebase already initialized")
-    except ValueError:
-        cred = credentials.Certificate("serviceAccountKey.json")
-        firebase_admin.initialize_app(cred, {
-            'databaseURL': 'https://automated-attendance-sys-7132e-default-rtdb.firebaseio.com/'
-        })
-```
-
-**Add Student Data (Lines 19-68)**
-```python
-ref = db.reference('Students')
-data = {
-    "321654": {
-        "name": "Kaushal Kumar",
-        "major": "Computer Science",
-        # ... more fields
-    }
-}
-for key, value in data.items():
-    ref.child(key).set(value)
-```
-
-### EncodeGenerator.py - Face Encoding Generation
-
-**Generate Encodings (Lines 5-20)**
-```python
-def find_encodings(images_list):
-    encode_list = []
-    for img in images_list:
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        encodings = face_recognition.face_encodings(img)
-        if len(encodings) > 0:
-            encode_list.append(encodings[0])
-    return encode_list
-```
-
-**Save Encodings (Lines 90-96)**
-```python
-with open("EncodeFile.p", 'wb') as file:
-    pickle.dump([valid_encodings, valid_ids], file)
-```
-
-## 🔄 How It Works
-
-### System Architecture
-
-```
-┌──────────────────────────────────────────────────────────────────┐
-│                    SYSTEM ARCHITECTURE                            │
-├──────────────────────────────────────────────────────────────────┤
-│                                                                    │
-│  ┌─────────────┐         ┌──────────────┐        ┌────────────┐ │
-│  │   Webcam    │────────▶│  main.py     │───────▶│  Firebase  │ │
-│  │  (Camera)   │         │ (Processing) │        │ (Database) │ │
-│  └─────────────┘         └──────────────┘        └────────────┘ │
-│        │                        │                        │        │
-│        │ Video Stream           │ Face Encodings        │ Data   │
-│        ▼                        ▼                        ▼        │
-│  ┌─────────────┐         ┌──────────────┐        ┌────────────┐ │
-│  │ Face Detect │         │ EncodeFile.p │        │  Storage   │ │
-│  │   OpenCV    │         │  (Pickle)    │        │  (Images)  │ │
-│  └─────────────┘         └──────────────┘        └────────────┘ │
-│                                                                    │
-└──────────────────────────────────────────────────────────────────┘
-```
-
-### Detailed Workflow
-
-#### 1. Initialization Phase
-```
-a) Load serviceAccountKey.json
-b) Connect to Firebase (Database + Storage)
-c) Initialize camera (auto-detect working camera)
-d) Set camera properties (640x480, 30 FPS)
-e) Load UI resources (background.png, Modes/*.png)
-f) Load face encodings from EncodeFile.p
-```
-
-#### 2. Main Loop (Continuous)
-```
-┌─────────────────────────────────────────────────────────┐
-│  START LOOP                                              │
-│    │                                                      │
-│    ├─→ Capture Frame (640x480)                          │
-│    │                                                      │
-│    ├─→ Resize Frame (25% for speed optimization)        │
-│    │                                                      │
-│    ├─→ Detect Faces (face_recognition.face_locations)   │
-│    │                                                      │
-│    ├─→ IF Face Detected:                                │
-│    │   ├─→ Generate Encoding (128-dim vector)           │
-│    │   ├─→ Compare with Known Encodings                 │
-│    │   ├─→ Calculate Face Distance (Euclidean)          │
-│    │   ├─→ Find Best Match (argmin)                     │
-│    │   ├─→ IF Match Found:                              │
-│    │   │   ├─→ Draw Corner Rectangle                    │
-│    │   │   ├─→ Show "Loading" (Mode 1)                  │
-│    │   │   ├─→ Fetch Student Data from Firebase        │
-│    │   │   ├─→ Load Student Image (local/Firebase)      │
-│    │   │   ├─→ Check Last Attendance Time               │
-│    │   │   ├─→ IF > 30 seconds:                         │
-│    │   │   │   ├─→ Increment total_attendance           │
-│    │   │   │   ├─→ Update last_attendance_time          │
-│    │   │   │   └─→ Show Success (Mode 2)                │
-│    │   │   └─→ ELSE:                                    │
-│    │   │       └─→ Show "Already Marked" (Mode 3)       │
-│    │   │                                                 │
-│    │   └─→ Display Student Info for 10 frames           │
-│    │                                                      │
-│    ├─→ Overlay UI Elements                              │
-│    ├─→ Show Frame                                        │
-│    └─→ Check for ESC key                                │
-│                                                          │
-│  END LOOP (or ESC pressed)                               │
-└─────────────────────────────────────────────────────────┘
-```
-
-#### 3. Face Recognition Algorithm
-
-**Step-by-Step Process:**
-
-1. **Capture & Preprocess**
-   ```python
-   img = cap.read()  # 640x480
-   imgS = cv2.resize(img, (0,0), None, 0.25, 0.25)  # 160x120 (4x faster)
-   imgS = cv2.cvtColor(imgS, cv2.COLOR_BGR2RGB)
-   ```
-
-2. **Face Detection**
-   ```python
-   facesCurFrame = face_recognition.face_locations(imgS)
-   # Returns: [(top, right, bottom, left), ...]
-   ```
-
-3. **Face Encoding**
-   ```python
-   encodesCurFrame = face_recognition.face_encodings(imgS, facesCurFrame)
-   # Returns: [128-dim numpy array, ...]
-   ```
-
-4. **Comparison**
-   ```python
-   matches = face_recognition.compare_faces(encodeListKnown, encodeFace)
-   # Returns: [True, False, False, ...]
-   
-   faceDis = face_recognition.face_distance(encodeListKnown, encodeFace)
-   # Returns: [0.42, 0.68, 0.55, ...]  (lower = better match)
-   ```
-
-5. **Best Match Selection**
-   ```python
-   matchIndex = np.argmin(faceDis)  # Index of lowest distance
-   if matches[matchIndex]:  # If below threshold (0.6)
-       student_id = studentIds[matchIndex]
-   ```
-
-6. **Attendance Update**
-   ```python
-   ref = db.reference(f"Students/{id}")
-   ref.child("total_attendance").set(count + 1)
-   ref.child("last_attendance_time").set(datetime.now())
-   ```
-
-### UI Mode States
-
-| Mode | Value | Description | Display |
-|------|-------|-------------|---------|
-| **Active** | 0 | Idle, waiting for face | `Modes/1.png` |
-| **Loading** | 1 | Face detected, processing | `Modes/2.png` + "Loading" text |
-| **Marked** | 2 | Attendance marked successfully | `Modes/3.png` + Student info |
-| **Already Marked** | 3 | Already attended today | `Modes/4.png` + "Already Marked" |
-
-### Camera Configuration
-
-```python
-CAM_WIDTH = 640
-CAM_HEIGHT = 480
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, CAM_WIDTH)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, CAM_HEIGHT)
-cap.set(cv2.CAP_PROP_FPS, 30)
-```
-
-**Layout:**
-- Camera feed: `imgBackground[162:642, 55:695]` (640x480)
-- UI panel: `imgBackground[44:677, 808:1222]` (414x633)
-- Student image: `imgBackground[175:391, 909:1125]` (216x216)
+---
 
 ## 🔧 Troubleshooting
 
-### Common Issues & Solutions
+### Camera Not Accessible in Browser
+- Ensure the site is served over `http://localhost` (not a raw IP) — browsers require a secure origin for webcam access
+- Grant camera permission when the browser prompts
 
-#### Issue 1: Camera Not Detected
-```
-Error: No camera found
-```
+### Face Not Recognized
+1. Improve lighting (bright, even, no backlight)
+2. Face the camera directly
+3. Re-generate encodings from the **Admin** page
+4. Lower the tolerance in `face_service.py` (e.g. `TOLERANCE = 0.6`)
 
-**Solutions:**
-1. Check camera permissions in system settings
-2. Verify camera is not used by another application
-3. Try different camera index:
-   ```python
-   cap = cv2.VideoCapture(1)  # or 2, 3, etc.
-   ```
-4. Test camera with:
-   ```python
-   import cv2
-   cap = cv2.VideoCapture(0)
-   ret, frame = cap.read()
-   print("Camera working" if ret else "Camera failed")
-   ```
+### Firebase Connection Error
+1. Verify `serviceAccountKey.json` is in the project root
+2. Check the Database URL and Storage Bucket strings in `firebase_service.py`
+3. Ensure internet connectivity and that the Firebase project is active
 
-#### Issue 2: Face Not Recognized
-```
-Warning: No face detected
-```
-
-**Solutions:**
-1. **Improve lighting** - Use bright, even lighting
-2. **Face camera directly** - Look straight at the camera
-3. **Remove obstructions** - Take off glasses/hats
-4. **Check image quality**:
-   ```python
-   img = cv2.imread("Images/321654.png")
-   print(img.shape)  # Should be (height, width, 3)
-   ```
-5. **Re-generate encodings**:
-   ```bash
-   python EncodeGenerator.py
-   ```
-
-#### Issue 3: Firebase Connection Error
-```
-Error: Could not connect to Firebase
-```
-
-**Solutions:**
-1. Verify `serviceAccountKey.json` exists
-2. Check Firebase URLs match:
-   ```python
-   "databaseURL": "https://automated-attendance-sys-7132e-default-rtdb.firebaseio.com/"
-   "storageBucket": "automated-attendance-sys-7132e.appspot.com"
-   ```
-3. Ensure internet connection
-4. Check Firebase console for project status
-5. Verify database rules allow access
-
-#### Issue 4: Import Errors
-```
-ModuleNotFoundError: No module named 'face_recognition'
-```
-
-**Solutions:**
+### `ModuleNotFoundError: No module named 'face_recognition'`
 ```bash
-# Windows - Install Visual C++ Build Tools first
+# Windows
 pip install cmake
-pip install dlib
+pip install dlib-binary   # use pre-compiled wheel
 pip install face-recognition
 
-# If dlib fails on Windows:
-pip install dlib-binary
-
-# macOS
-brew install cmake
-pip install face-recognition
-
-# Linux
-sudo apt-get install cmake libboost-all-dev
+# macOS / Linux
+brew install cmake        # macOS
 pip install face-recognition
 ```
 
-#### Issue 5: Encoding File Not Found
-```
-FileNotFoundError: [Errno 2] No such file or directory: 'EncodeFile.p'
-```
-
-**Solution:**
+### `EncodeFile.p` Not Found
+Go to the **Admin** page and click **Generate Encodings**, or run:
 ```bash
-python EncodeGenerator.py
+python EncodeGenerator.py   # legacy script
 ```
 
-#### Issue 6: Slow Performance
-```
-System is laggy
-```
+### Backend CORS Error
+The backend allows `http://localhost:5173` and `http://localhost:3000` by default. If you change the frontend port, update `allow_origins` in `backend/main.py`.
 
-**Solutions:**
-1. Reduce detection frequency:
-   ```python
-   if counter % 30 == 0:  # Process every 30 frames
-       # Face detection code
-   ```
-2. Lower resolution:
-   ```python
-   CAM_WIDTH = 480
-   CAM_HEIGHT = 360
-   ```
-3. Increase resize scale:
-   ```python
-   imgS = cv2.resize(img, (0, 0), None, 0.2, 0.2)  # 20% instead of 25%
-   ```
-4. Close unnecessary applications
+---
 
-#### Issue 7: Image Loading Fails
-```
-Error: Could not read image
-```
+## 🤝 Contributing
 
-**Solutions:**
-1. Check file naming: `321654.png` (ID matches database
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m "feat: add your feature"`
+4. Push to the branch: `git push origin feature/your-feature`
+5. Open a Pull Request
+
+Please follow [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+
+Made with ❤️ by **Kaushal Kumar**
+
+⭐ Star this repo if you found it useful!
+
+</div>
